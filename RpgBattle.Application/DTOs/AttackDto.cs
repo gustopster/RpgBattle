@@ -2,7 +2,7 @@ namespace RpgBattle.Application.DTOs
 {
     public class AttackDto
     {
-        public Guid AttackerUserId { get; set; }
-        public Guid SkillId { get; set; }
+        public int AttackerUserId { get; set; }
+        public int SkillId { get; set; }
     }
 }

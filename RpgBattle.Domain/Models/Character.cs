@@ -2,7 +2,7 @@ namespace RpgBattle.Domain.Models
 {
     public class Character
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string Class { get; set; } = null!;
         public int MaxHp { get; set; }

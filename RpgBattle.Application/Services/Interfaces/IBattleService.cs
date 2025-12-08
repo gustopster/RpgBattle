@@ -5,10 +5,10 @@ namespace RpgBattle.Application.Services.Interfaces
     public interface IBattleService
     {
         Task<BattleDto> CreateBattleAsync(CreateBattleDto dto);
-        Task<BattleDto?> JoinBattleAsync(Guid battleId, Guid userId, string nickname, Guid characterId);
-        Task<BattleDto?> GetBattleAsync(Guid battleId);
+        Task<BattleDto?> JoinBattleAsync(int battleId, int userId, string nickname, int characterId);
+        Task<BattleDto?> GetBattleAsync(int battleId);
         Task<IEnumerable<BattleDto>> GetAllBattlesAsync();
-        Task<BattleDto?> AttackAsync(Guid battleId, AttackDto attackDto);
+        Task<BattleDto?> AttackAsync(int battleId, AttackDto attackDto);
         Task<IEnumerable<BattleDto>> GetActiveBattlesAsync();
     }
 }

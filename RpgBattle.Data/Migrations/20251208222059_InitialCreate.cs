@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -19,14 +20,15 @@ namespace RpgBattle.Data.Migrations
                 schema: "projeto",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Player1Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Player2Id = table.Column<Guid>(type: "uuid", nullable: true),
-                    Player1CharacterId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Player2CharacterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Player1Id = table.Column<int>(type: "integer", nullable: false),
+                    Player2Id = table.Column<int>(type: "integer", nullable: true),
+                    Player1CharacterId = table.Column<int>(type: "integer", nullable: false),
+                    Player2CharacterId = table.Column<int>(type: "integer", nullable: true),
                     Player1Hp = table.Column<int>(type: "integer", nullable: false),
                     Player2Hp = table.Column<int>(type: "integer", nullable: false),
-                    TurnUserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TurnUserId = table.Column<int>(type: "integer", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     FinishedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -43,7 +45,8 @@ namespace RpgBattle.Data.Migrations
                 schema: "projeto",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Class = table.Column<string>(type: "text", nullable: false),
                     MaxHp = table.Column<int>(type: "integer", nullable: false),
@@ -60,7 +63,8 @@ namespace RpgBattle.Data.Migrations
                 schema: "projeto",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nickname = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -74,8 +78,9 @@ namespace RpgBattle.Data.Migrations
                 schema: "projeto",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CharacterId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CharacterId = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Damage = table.Column<int>(type: "integer", nullable: false),
                     HitChance = table.Column<int>(type: "integer", nullable: false)

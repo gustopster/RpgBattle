@@ -1,4 +1,5 @@
 using FluentValidation;
+using RpgBattle.Application.DTOs;
 
 namespace RpgBattle.Api.Validators
 {

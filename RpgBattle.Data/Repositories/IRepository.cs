@@ -4,12 +4,12 @@ namespace RpgBattle.Data.Repositories.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        Task<T?> GetByIdAsync(Guid id);
+        Task<T?> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
         Task AddAsync(T entity);
         void Update(T entity);
         void Remove(T entity);
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(int id);
         Task SaveChangesAsync();
         Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
     }

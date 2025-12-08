@@ -23,7 +23,7 @@ namespace RpgBattle.Api.Controllers
         }
 
         [HttpPost("{id}/join")]
-        public async Task<IActionResult> Join(Guid id, [FromBody] JoinBattleDto dto)
+        public async Task<IActionResult> Join(int id, [FromBody] JoinBattleDto dto)
         {
             var battle = await _battleService.JoinBattleAsync(id, dto.UserId, dto.Nickname, dto.CharacterId);
             if (battle == null) return BadRequest("Não foi possível entrar na batalha.");
@@ -31,7 +31,7 @@ namespace RpgBattle.Api.Controllers
         }
 
         [HttpPost("{id}/attack")]
-        public async Task<IActionResult> Attack(Guid id, [FromBody] AttackDto dto)
+        public async Task<IActionResult> Attack(int id, [FromBody] AttackDto dto)
         {
             var result = await _battleService.AttackAsync(id, dto);
             if (result == null) return BadRequest();
@@ -46,7 +46,7 @@ namespace RpgBattle.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(int id)
         {
             var b = await _battleService.GetBattleAsync(id);
             if (b == null) return NotFound();

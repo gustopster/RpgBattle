@@ -1,4 +1,4 @@
- 🎮 RPG Battle – Projeto de Estudos
+🎮 RPG Battle – Projeto de Estudos
 
 Esse projeto nasceu com um objetivo bem simples:
 me ajudar a voltar a praticar React Native com um backend real.
@@ -29,8 +29,7 @@ Realizam ataques por turno
 
 A batalha termina automaticamente quando o HP de alguém chega a zero
 
-Também implementei um sistema de matchmaking automático, para que, se um jogador criar uma batalha e ninguém entrar, o próprio sistema una jogadores aleatoriamente depois de alguns segundos.
-Isso foi feito para simular melhor a experiência de um jogo real.
+Também implementei um sistema de matchmaking automático, para que, se um jogador criar uma batalha e ninguém entrar, o próprio sistema una jogadores aleatoriamente depois de alguns segundos. Isso foi feito para simular melhor a experiência de um jogo real.
 
 🎯 Por que eu criei isso?
 
@@ -61,10 +60,39 @@ Skills básicas para cada personagem
 Isso existe apenas para que eu consiga começar a testar o app no React Native rapidamente.
 📌 No futuro, a ideia é permitir cadastro dinâmico de tudo isso via tela.
 
-🔐 Sobre configurações e segurança
+⚙️ Configuração do Banco de Dados e Migrations
+
+Para quem for clonar este projeto, é necessário criar o banco de dados e rodar as migrations do EF Core.
+Siga os passos abaixo:
+
+Certifique-se de ter configurado sua string de conexão no appsettings.json ou usando User Secrets.
+
+Limpe e construa o projeto para evitar conflitos:
+
+dotnet clean
+dotnet build
+
+
+Criar a migration inicial:
+
+Caso você esteja na raiz do projeto:
+
+dotnet ef migrations add InitialCreate --project RpgBattle.Data --startup-project RpgBattle.Api
+
+
+--project → onde está o DbContext
+--startup-project → onde está o Program.cs (API)
+
+Atualizar o banco de dados:
+
+dotnet ef database update --project RpgBattle.Data --startup-project RpgBattle.Api
+
+
+✅ Isso vai criar todas as tabelas com IDs int e auto-increment, pronto para rodar a aplicação e testes.
+
+🔐 Sobre Configurações e Segurança
 
 As configurações de banco de dados não ficam no GitHub.
-
 Elas ficam salvas localmente usando User Secrets, então quem clonar este projeto precisará configurar sua própria conexão com o banco antes de rodar.
 
 Isso foi feito justamente para:
@@ -90,7 +118,6 @@ Executar ataques
 Mostrar turnos em tempo real
 
 Esse backend já está pronto justamente para servir de base para esse aprendizado.
-
 
 ⚠️ Observação Importante
 

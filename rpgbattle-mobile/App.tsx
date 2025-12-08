@@ -14,14 +14,14 @@ import { api } from "./src/services/api";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export interface Battle {
-  id: string;
-  player1Id: string;
-  player2Id?: string | null;
+  id: number;
+  player1Id: number;
+  player2Id?: number | null;
 
   player1Hp: number;
   player2Hp: number;
 
-  turnUserId: string;
+  turnUserId: number;
   status: string;
 
   createdAt: string;

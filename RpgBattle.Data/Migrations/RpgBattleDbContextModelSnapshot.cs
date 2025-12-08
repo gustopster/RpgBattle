@@ -25,9 +25,11 @@ namespace RpgBattle.Data.Migrations
 
             modelBuilder.Entity("RpgBattle.Domain.Models.Battle", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -38,23 +40,23 @@ namespace RpgBattle.Data.Migrations
                     b.Property<DateTime?>("FinishedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("Player1CharacterId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Player1CharacterId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Player1Hp")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("Player1Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Player1Id")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid?>("Player2CharacterId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("Player2CharacterId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Player2Hp")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("Player2Id")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("Player2Id")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -63,8 +65,8 @@ namespace RpgBattle.Data.Migrations
                     b.Property<DateTime?>("TurnStartedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("TurnUserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("TurnUserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -75,9 +77,11 @@ namespace RpgBattle.Data.Migrations
 
             modelBuilder.Entity("RpgBattle.Domain.Models.Character", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Attack")
                         .HasColumnType("integer");
@@ -103,12 +107,14 @@ namespace RpgBattle.Data.Migrations
 
             modelBuilder.Entity("RpgBattle.Domain.Models.Skill", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("CharacterId")
-                        .HasColumnType("uuid");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Damage")
                         .HasColumnType("integer");
@@ -129,9 +135,11 @@ namespace RpgBattle.Data.Migrations
 
             modelBuilder.Entity("RpgBattle.Domain.Models.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");

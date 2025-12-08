@@ -18,13 +18,13 @@ namespace RpgBattle.Data.Repositories.Implementations
 
         public async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
         public async Task<IEnumerable<T>> GetAllAsync() => await _dbSet.ToListAsync();
-        public async Task<T?> GetByIdAsync(Guid id) => await _dbSet.FindAsync(id);
+        public async Task<T?> GetByIdAsync(int id) => await _dbSet.FindAsync(id);
         public void Remove(T entity) => _dbSet.Remove(entity);
         public void Update(T entity) => _dbSet.Update(entity);
         public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
         public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate) =>
             await _dbSet.FirstOrDefaultAsync(predicate);
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(int id)
         {
             var entity = await GetByIdAsync(id);
             if (entity != null)

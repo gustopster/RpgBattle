@@ -30,6 +30,7 @@ namespace RpgBattle.Application.Services.Implementations
             _rng = new Random();
         }
 
+        // Cria batalha
         public async Task<BattleDto> CreateBattleAsync(CreateBattleDto dto)
         {
             var user = await _userRepo.GetByIdAsync(dto.UserId);
@@ -44,7 +45,7 @@ namespace RpgBattle.Application.Services.Implementations
 
             var battle = new Battle
             {
-                Id = Guid.NewGuid(),
+                // Agora o ID é int e será gerado pelo EF (auto-increment)
                 Player1Id = dto.UserId,
                 Player1CharacterId = dto.CharacterId,
                 Player1Hp = character.MaxHp,
@@ -62,7 +63,8 @@ namespace RpgBattle.Application.Services.Implementations
             return _mapper.Map<BattleDto>(battle);
         }
 
-        public async Task<BattleDto?> JoinBattleAsync(Guid battleId, Guid userId, string nickname, Guid characterId)
+        // Entrar em batalha
+        public async Task<BattleDto?> JoinBattleAsync(int battleId, int userId, string nickname, int characterId)
         {
             var battle = await _battleRepo.GetByIdAsync(battleId);
             if (battle == null) throw new ArgumentException("Batalha não encontrada.");
@@ -97,19 +99,22 @@ namespace RpgBattle.Application.Services.Implementations
             return _mapper.Map<BattleDto>(battle);
         }
 
-
-        public async Task<BattleDto?> GetBattleAsync(Guid battleId)
+        // Obter batalha pelo ID
+        public async Task<BattleDto?> GetBattleAsync(int battleId)
         {
             var battle = await _battleRepo.GetByIdAsync(battleId);
             return battle == null ? null : _mapper.Map<BattleDto>(battle);
         }
+
+        // Obter todas as batalhas
         public async Task<IEnumerable<BattleDto>> GetAllBattlesAsync()
         {
             var battles = await _battleRepo.GetAllAsync();
             return battles.Select(_mapper.Map<BattleDto>);
         }
 
-        public async Task<BattleDto?> AttackAsync(Guid battleId, AttackDto attackDto)
+        // Ataque
+        public async Task<BattleDto?> AttackAsync(int battleId, AttackDto attackDto)
         {
             var battle = await _battleRepo.GetByIdAsync(battleId);
             if (battle == null || battle.Status != "active") return null;

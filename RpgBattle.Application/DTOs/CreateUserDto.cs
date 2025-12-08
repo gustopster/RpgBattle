@@ -1,5 +1,8 @@
-public class CreateUserDto
+namespace RpgBattle.Application.DTOs
 {
-    public Guid Id { get; set; }
-    public string Nickname { get; set; } = null!;
+    public class CreateUserDto
+    {
+        public int Id { get; set; }
+        public string Nickname { get; set; } = null!;
+    }
 }
