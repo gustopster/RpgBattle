@@ -1,4 +1,4 @@
-🎮 RPG Battle – Projeto de Estudos
+ 🎮 RPG Battle – Projeto de Estudos
 
 Esse projeto nasceu com um objetivo bem simples:
 me ajudar a voltar a praticar React Native com um backend real.
