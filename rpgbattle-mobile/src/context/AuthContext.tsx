@@ -5,7 +5,7 @@ import { User } from "../types/uset";
 interface AuthContextData {
   accounts: User[];
   activeUser: User | null;
-  addAccount: (user: User) => Promise<void>;
+  addAccount: (user: User, mode: "login" | "add") => Promise<void>;
   switchAccount: (userId: number) => Promise<void>;
   removeAccount: (userId: number) => Promise<void>;
   logoutAll: () => Promise<void>;
@@ -67,15 +67,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   }
 
-  async function addAccount(user: User) {
-    setAccounts(prev => {
-      const exists = prev.some(u => u.id === user.id);
-      const updated = exists ? prev : [...prev, user];
-      persistState(updated, user.id);
-      return updated;
-    });
+  async function addAccount(
+    user: User,
+    mode: "login" | "add" = "login"
+  ) {
+    const exists = accounts.some(u => u.id === user.id);
 
+    // 🚫 Tentando adicionar uma conta que já existe
+    if (exists && mode === "add") {
+      throw new Error("ACCOUNT_ALREADY_EXISTS");
+    }
+
+    // 🔁 Login normal: apenas ativa a conta existente
+    if (exists) {
+      setActiveUser(user);
+      await persistState(accounts, user.id);
+      return;
+    }
+
+    // ✅ Nova conta
+    const updated = [...accounts, user];
+    setAccounts(updated);
     setActiveUser(user);
+    await persistState(updated, user.id);
   }
 
   async function switchAccount(userId: number) {

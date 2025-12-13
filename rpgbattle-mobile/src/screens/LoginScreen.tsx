@@ -33,11 +33,20 @@ export function LoginScreen({ route, navigation }: Props) {
         return;
       }
 
-      await addAccount(user);
-    } catch {
+      await addAccount(user, mode);
+    } catch (error: any) {
+      if (error.message === "ACCOUNT_ALREADY_EXISTS") {
+        Alert.alert(
+          "Conta já adicionada",
+          "Essa conta já está logada no aplicativo."
+        );
+        return;
+      }
+
       Alert.alert("Erro", "Falha ao realizar login");
     }
   }
+
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
