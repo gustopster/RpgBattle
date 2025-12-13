@@ -3,15 +3,11 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { loginUser } from "../services/userService";
 import { useTheme } from "../theme/ThemeContext";
 
-export function LoginScreen({ navigation }: any) {
+export function LoginScreen() {
   const [nickname, setNickname] = useState("");
   const { backgroundColor, cardColor, textColor } = useTheme();
 
   const handleLogin = async () => {
-    if (!nickname.trim()) {
-      Alert.alert("Erro", "Digite um nickname válido");
-      return;
-    }
 
     const user = await loginUser(nickname);
     if (!user) {
@@ -19,7 +15,7 @@ export function LoginScreen({ navigation }: any) {
       return;
     }
 
-    navigation.navigate("Home", { user });
+    console.log(user);
   };
 
   return (
@@ -30,7 +26,7 @@ export function LoginScreen({ navigation }: any) {
         placeholder="Digite seu nickname"
         placeholderTextColor="#aaa"
         value={nickname}
-        onChangeText={setNickname}
+        onChangeText={(e) => setNickname(e.trim())}
       />
       <Button title="Entrar" onPress={handleLogin} />
     </View>
