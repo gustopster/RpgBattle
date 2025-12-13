@@ -30,13 +30,15 @@ export function AccountSwitcherModal() {
         logoutAll,
         isAccountModalOpen,
         closeAccountModal,
+        setActiveUser,
+        setLoginMode,
     } = useAuth();
 
 
-    const navigation = useNavigation<NavigationProp>();
     function handleAddAccount() {
         closeAccountModal();
-        navigation.navigate("Login", { mode: "add" });
+        setLoginMode("add");
+        setActiveUser(null);
     };
 
     const { cardColor, textColor } = useTheme();
@@ -198,7 +200,7 @@ const styles = StyleSheet.create({
     },
     remove: {
         color: "#e74c3c",
-        marginLeft: 15,
+        marginLeft: -50,
     },
     close: {
         alignItems: "center",

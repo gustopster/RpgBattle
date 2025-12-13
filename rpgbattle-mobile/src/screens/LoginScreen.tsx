@@ -25,7 +25,6 @@ export function LoginScreen({ route, navigation }: Props) {
   const mode = route.params?.mode ?? "login";
 
   async function handleLogin() {
-
     try {
       const user = await loginUser(nickname.trim());
 
@@ -35,8 +34,6 @@ export function LoginScreen({ route, navigation }: Props) {
       }
 
       await addAccount(user);
-
-      navigation.replace("BattleClass");
     } catch {
       Alert.alert("Erro", "Falha ao realizar login");
     }

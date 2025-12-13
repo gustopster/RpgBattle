@@ -13,6 +13,9 @@ interface AuthContextData {
   openAccountModal: () => void;
   closeAccountModal: () => void;
   isAccountModalOpen: boolean;
+  loginMode: "login" | "add";
+  setLoginMode: (mode: "login" | "add") => void;
+  setActiveUser: (user: User | null) => void;
 }
 
 const STORAGE_KEY = "@auth_state";
@@ -28,6 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [accounts, setAccounts] = useState<User[]>([]);
   const [activeUser, setActiveUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loginMode, setLoginMode] = useState<"login" | "add">("login");
 
   useEffect(() => {
     loadAuthState();
@@ -84,22 +88,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   async function removeAccount(userId: number) {
     const updated = accounts.filter(u => u.id !== userId);
+
     const nextActive =
-      activeUser?.id === userId ? null : activeUser?.id ?? null;
+      updated.length > 0 ? updated[0] : null;
 
     setAccounts(updated);
-    setActiveUser(
-      updated.find(u => u.id === nextActive) ?? null
-    );
+    setActiveUser(nextActive);
 
-    await persistState(updated, nextActive);
+    await persistState(updated, nextActive?.id ?? null);
   }
+
 
   async function logoutAll() {
     setAccounts([]);
     setActiveUser(null);
+    closeAccountModal();
     await AsyncStorage.removeItem(STORAGE_KEY);
   }
+
 
   const [isAccountModalOpen, setAccountModalOpen] = useState(false);
 
@@ -110,7 +116,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   function closeAccountModal() {
     setAccountModalOpen(false);
   }
-
 
   return (
     <AuthContext.Provider
@@ -125,6 +130,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         openAccountModal,
         closeAccountModal,
         isAccountModalOpen,
+        loginMode,
+        setLoginMode,
+        setActiveUser,
       }}
     >
       {children}
