@@ -1,34 +1,69 @@
 import { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+} from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
 import { loginUser } from "../services/userService";
 import { useTheme } from "../theme/ThemeContext";
+import { useAuth } from "../context/AuthContext";
+import { RootStackParamList } from "../types/navigation";
 
-export function LoginScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, "Login">;
+
+export function LoginScreen({ route, navigation }: Props) {
   const [nickname, setNickname] = useState("");
+
   const { backgroundColor, cardColor, textColor } = useTheme();
+  const { addAccount } = useAuth();
 
-  const handleLogin = async () => {
+  const mode = route.params?.mode ?? "login";
 
-    const user = await loginUser(nickname);
-    if (!user) {
-      Alert.alert("Erro", "Usuário não encontrado");
-      return;
+  async function handleLogin() {
+
+    try {
+      const user = await loginUser(nickname.trim());
+
+      if (!user) {
+        Alert.alert("Erro", "Usuário não encontrado");
+        return;
+      }
+
+      await addAccount(user);
+
+      navigation.replace("BattleClass");
+    } catch {
+      Alert.alert("Erro", "Falha ao realizar login");
     }
-
-    console.log(user);
-  };
+  }
 
   return (
     <View style={[styles.container, { backgroundColor }]}>
-      <Text style={[styles.title, { color: textColor }]}>Login</Text>
+      <Text style={[styles.title, { color: textColor }]}>
+        {mode === "add" ? "Adicionar conta" : "Login"}
+      </Text>
+
       <TextInput
-        style={[styles.input, { backgroundColor: cardColor, color: textColor }]}
+        style={[
+          styles.input,
+          { backgroundColor: cardColor, color: textColor },
+        ]}
         placeholder="Digite seu nickname"
         placeholderTextColor="#aaa"
         value={nickname}
-        onChangeText={(e) => setNickname(e.trim())}
+        onChangeText={text => setNickname(text.trim())}
+        autoCapitalize="none"
       />
-      <Button title="Entrar" onPress={handleLogin} />
+
+      <Button
+        title={mode === "add" ? "Adicionar" : "Entrar"}
+        onPress={handleLogin}
+      />
     </View>
   );
 }
