@@ -2,6 +2,7 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "react-native";
 
+import { LoginScreen } from "./src/screens/LoginScreen"; // Nova tela de login
 import { HomeScreen } from "./src/screens/HomeScreen";
 import { SelectCharacterScreen } from "./src/screens/SelectCharacterScreen";
 import { CreateBattleScreen } from "./src/screens/CreateBattleScreen";
@@ -23,17 +24,23 @@ function Routes() {
 
       <NavigationContainer theme={darkMode ? DarkTheme : DefaultTheme}>
         <Stack.Navigator
+          initialRouteName="Login" // Login agora é a primeira tela
           screenOptions={{
-            headerStyle: {
-              backgroundColor: backgroundColor,
-            },
+            headerStyle: { backgroundColor },
             headerTintColor: textColor,
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
+            headerTitleStyle: { fontWeight: "bold" },
           }}
         >
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ title: "Login" }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ title: "Escolha seu Player" }}
+          />
           <Stack.Screen name="SelectCharacter" component={SelectCharacterScreen} />
           <Stack.Screen name="CreateBattle" component={CreateBattleScreen} />
           <Stack.Screen name="BattleList" component={BattleScreen} />
